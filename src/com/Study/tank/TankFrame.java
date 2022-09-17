@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 鸡腿子
@@ -13,8 +15,9 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
 
-    Tank myTank = new Tank(200, 200, Dir.DOWN,this);//this 就是控制子弹的发射
-    Bullet b = new Bullet(300, 300, Dir.DOWN);
+    Tank myTank = new Tank(200, 200, Dir.DOWN, this);//this 就是控制子弹的发射
+    List<Bullet> bullets = new ArrayList<>();//数组
+    Bullet b = new Bullet(300, 300, Dir.DOWN,this);
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//抽象为常量 更改一个位置即可
 
 
@@ -57,10 +60,21 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        Color c=g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹的数量"+bullets.size(),10,60);
+        g.setColor(c);//测试子弹的内存泄露 就是子弹飞出窗口但是不会消失 所以就是当前子弹最好要结束 也就是将其生命周期干掉
 
-
-        myTank.paint(g);
-        b.paint(g);
+        myTank.paint(g);//坦克绘制
+        for (int i = 0; i < bullets.size(); i++) {//
+            bullets.get(i).paint(g);
+        }
+        /*
+        使用这种迭代器会有bug 子弹可能不会移除 是因为不能使用迭代器以外的方式删除内容
+         */
+//        for (Bullet b : bullets){
+//            b.paint(g);
+//        }
 
 
 //        x += 10;
@@ -73,7 +87,6 @@ public class TankFrame extends Frame {
         boolean bU = false;
         boolean bR = false;
         boolean bD = false;
-
 
 
         @Override
@@ -142,7 +155,6 @@ public class TankFrame extends Frame {
                     myTank.setDir(Dir.DOWN);
 
             }
-
 
 
         }
