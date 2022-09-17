@@ -14,13 +14,14 @@ public class TankFrame extends Frame {
 
 
     Tank myTank = new Tank(200, 200, Dir.DOWN);
-    Bullet b=new Bullet(300,300,Dir.DOWN);
+    Bullet b = new Bullet(300, 300, Dir.DOWN);
+    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//抽象为常量 更改一个位置即可
 
 
     public TankFrame() {
 
 
-        setSize(800, 600);//设置窗口
+        setSize(GAME_WIDTH, GAME_HEIGHT);//设置窗口
         setResizable(false);
         setTitle("tank game");
         setVisible(true);
@@ -34,9 +35,26 @@ public class TankFrame extends Frame {
         });
     }
 
+    Image offScreenImage = null;//定义图片
+
+    @Override
+    public void update(Graphics g) {//消失闪烁现象 就是作为图片一张一张再次绘制
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);//获取当前画面大小的图片
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();//拿到图片
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);//背景变为黑色
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);//这张图片再次绘制到画面上
+
+    }
 
     @Override
     public void paint(Graphics g) {
+
 
         myTank.paint(g);
         b.paint(g);
@@ -52,6 +70,7 @@ public class TankFrame extends Frame {
         boolean bU = false;
         boolean bR = false;
         boolean bD = false;
+        boolean bJ = false;
 
 
         @Override
@@ -70,8 +89,12 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = true;
                     break;
+                case KeyEvent.VK_J:
+                    bJ = true;
+                    break;
                 default:
                     break;
+
             }
 
             setMainTankDir();
@@ -93,6 +116,9 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = false;
                     break;
+                case KeyEvent.VK_J:
+                    bJ = true;
+                    break;
                 default:
                     break;
             }
@@ -113,6 +139,12 @@ public class TankFrame extends Frame {
                     myTank.setDir(Dir.UP);
                 if (bD)
                     myTank.setDir(Dir.DOWN);
+
+            }
+
+            if (!bJ) b.setFire(false);
+            else {
+                b.setFire(true);
 
             }
 
