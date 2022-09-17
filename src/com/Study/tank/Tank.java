@@ -13,13 +13,19 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
 
     private boolean moving = false;
 
+    private TankFrame tf=null;
 
-    public Tank(int x, int y, Dir dir) {
+
+
+    public Tank(int x, int y, Dir dir,TankFrame tf) {//将子弹引入
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf=tf;
     }
+
+
 
     public void paint(Graphics g) {
         Color c = g.getColor();
@@ -50,6 +56,10 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
                 y -= SPEED;
                 break;
         }
+    }
+
+    public void fire(){
+        tf.b=new Bullet(this.x,this.y,this.dir);//从坦克的位置发射出来子弹
     }
 
 

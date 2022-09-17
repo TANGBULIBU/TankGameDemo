@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
 public class TankFrame extends Frame {
 
 
-    Tank myTank = new Tank(200, 200, Dir.DOWN);
+    Tank myTank = new Tank(200, 200, Dir.DOWN,this);//this 就是控制子弹的发射
     Bullet b = new Bullet(300, 300, Dir.DOWN);
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//抽象为常量 更改一个位置即可
 
@@ -33,6 +33,9 @@ public class TankFrame extends Frame {
                 System.exit(0);
             }
         });
+
+        //传入子弹对象
+
     }
 
     Image offScreenImage = null;//定义图片
@@ -70,28 +73,26 @@ public class TankFrame extends Frame {
         boolean bU = false;
         boolean bR = false;
         boolean bD = false;
-        boolean bJ = false;
+
 
 
         @Override
         public void keyPressed(KeyEvent e) {//按键
             int key = e.getKeyCode();
             switch (key) {
-                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_A:
                     bL = true;
                     break;
-                case KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_D:
                     bR = true;
                     break;
-                case KeyEvent.VK_UP:
+                case KeyEvent.VK_W:
                     bU = true;
                     break;
-                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_S:
                     bD = true;
                     break;
-                case KeyEvent.VK_J:
-                    bJ = true;
-                    break;
+
                 default:
                     break;
 
@@ -104,20 +105,20 @@ public class TankFrame extends Frame {
         public void keyReleased(KeyEvent e) {//抬起
             int key = e.getKeyCode();
             switch (key) {
-                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_A:
                     bL = false;
                     break;
-                case KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_D:
                     bR = false;
                     break;
-                case KeyEvent.VK_UP:
+                case KeyEvent.VK_W:
                     bU = false;
                     break;
-                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_S:
                     bD = false;
                     break;
                 case KeyEvent.VK_J:
-                    bJ = true;
+                    myTank.fire();
                     break;
                 default:
                     break;
@@ -142,11 +143,7 @@ public class TankFrame extends Frame {
 
             }
 
-            if (!bJ) b.setFire(false);
-            else {
-                b.setFire(true);
 
-            }
 
         }
     }
