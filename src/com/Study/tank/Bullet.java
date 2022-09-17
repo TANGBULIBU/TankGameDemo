@@ -13,10 +13,20 @@ public class Bullet {
     private int x, y;
     private Dir dir;
 
+    private boolean fire;
+
     public Bullet(int x, int y, Dir dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+    }
+
+    public boolean isFire() {
+        return fire;
+    }
+
+    public void setFire(boolean fire) {
+        this.fire = fire;
     }
 
     public void paint(Graphics g) {//»æÖÆ×Óµ¯

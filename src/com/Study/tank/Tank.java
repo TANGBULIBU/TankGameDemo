@@ -22,8 +22,10 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     }
 
     public void paint(Graphics g) {
-
+        Color c = g.getColor();
+        g.setColor(Color.yellow);
         g.fillRect(x, y, 50, 50);
+        g.setColor(c);
 
         move();
 
