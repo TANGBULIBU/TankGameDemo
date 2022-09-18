@@ -29,10 +29,23 @@ public class Bullet {
             tf.bullets.remove(this);//如果没有存活 就移除
         }
 
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(c);
+        switch (dir) {
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL, x, y+24, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR, x+50, y+24, null);
+                break;
+
+            case UP:
+                g.drawImage(ResourceMgr.bulletU, x+20, y, null);
+                break;
+
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD, x+20, y+50, null);
+                break;
+
+        }
 
         move();//子弹也需要有移动状态
 

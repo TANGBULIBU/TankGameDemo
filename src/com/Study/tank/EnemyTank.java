@@ -1,50 +1,42 @@
 package com.Study.tank;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 鸡腿子
  * @version 1.0
  */
-public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
+public class EnemyTank {
+
     private int x, y;
     private Dir dir = Dir.DOWN;//特有属性 默认朝向
     private static final int SPEED = 5;//不能呗改变
 
     private boolean moving = false;
 
-    private TankFrame tf = null;
+    private TankFrame tf=null;
+
+    List<EnemyTank> enemyTanks = new ArrayList<>();//数组
 
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {//将子弹引入
+
+    public EnemyTank(int x, int y, Dir dir,TankFrame tf) {//将子弹引入
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf = tf;
+        this.tf=tf;
     }
 
 
+
     public void paint(Graphics g) {
-
-        switch (dir) {
-            case LEFT:
-                g.drawImage(ResourceMgr.tankL, x, y, null);
-                break;
-            case RIGHT:
-                g.drawImage(ResourceMgr.tankR, x, y, null);
-                break;
-
-            case UP:
-                g.drawImage(ResourceMgr.tankU, x, y, null);
-                break;
-
-            case DOWN:
-                g.drawImage(ResourceMgr.tankD, x, y, null);
-                break;
-
-        }
-
+        Color c = g.getColor();
+        g.setColor(Color.yellow);
+        g.fillRect(x, y, 50, 50);
+        g.setColor(c);
 
         move();
     }
@@ -69,8 +61,8 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
         }
     }
 
-    public void fire() {
-        tf.bullets.add(new Bullet(this.x, this.y, this.dir, this.tf));//从坦克的位置发射出来子弹
+    public void fire(){
+        tf.bullets.add(new Bullet(this.x,this.y,this.dir,this.tf));//从坦克的位置发射出来子弹
     }
 
 
