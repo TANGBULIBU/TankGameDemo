@@ -14,7 +14,7 @@ public class Main {
         }
 
         while (true){
-            Thread.sleep(60);//线程休眠
+            Thread.sleep(45);//线程休眠
             tf.repaint();
         }
     }

@@ -24,7 +24,7 @@ public class TankFrame extends Frame {
 
     Explode e=new Explode(100, 100,this);//爆炸
 
-    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//抽象为常量 更改一个位置即可
+    static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;//抽象为常量 更改一个位置即可
 
 
     public TankFrame() {
