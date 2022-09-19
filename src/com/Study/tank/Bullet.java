@@ -15,13 +15,23 @@ public class Bullet {
 
     private boolean living = true;
     TankFrame tf = null;
+    private Group group=Group.BAD;
 
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir,Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group=group;
         this.tf = tf;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public void paint(Graphics g) {//绘制子弹
@@ -75,8 +85,13 @@ public class Bullet {
     }
 
     public void collideWith(Tank tank) {
+
+        if (this.group==tank.getGroup())return;//队友伤害默认不开启
+
+        //TODO 用一个rect记录子弹的位置
         Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// Rectangle 矩形 this子弹的位置数据
         Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH, Tank.HEIGHT);// tank的位置数据
+
 
         if (rect1.intersects(rect2)){//对象1，2相交
             tank.die();

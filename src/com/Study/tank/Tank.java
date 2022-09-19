@@ -1,6 +1,7 @@
 package com.Study.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @author 鸡腿子
@@ -15,16 +16,20 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
 
-    private boolean moving = false;
+    private boolean moving = true;
     private boolean living = true;
     private TankFrame tf = null;
 
+    private Random random=new Random();//生成随机数
+    private Group group=Group.BAD;
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {//将子弹引入
+
+    public Tank(int x, int y, Dir dir,Group group, TankFrame tf) {//将子弹引入
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group=group;
         this.tf = tf;
     }
 
@@ -74,14 +79,24 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
                 y -= SPEED;
                 break;
         }
+
+        if (random.nextInt(10)>8)this.fire();//
+
     }
 
     public void fire() {
         int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;//坦克发射子弹的位置
         int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;//坦克发射子弹的位置
-        tf.bullets.add(new Bullet(bx, by, this.dir, this.tf));//从坦克的位置发射出来子弹
+        tf.bullets.add(new Bullet(bx, by, this.dir,this.group, this.tf));//从坦克的位置发射出来子弹
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 
     public boolean isMoving() {
         return moving;
