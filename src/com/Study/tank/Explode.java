@@ -13,7 +13,6 @@ public class Explode {
     private int x, y;
 
 
-    private boolean living = true;
     TankFrame tf = null;
     private int step = 0;
 
@@ -28,10 +27,10 @@ public class Explode {
     public void paint(Graphics g) {//绘制子弹
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);//使用爆炸并且每进行一步++
         if (step >= ResourceMgr.explodes.length) {
-            step = 0;
+            tf.explodes.remove(this);
         }
 
-            tf.explodes.remove(this);
+
 
 
     }

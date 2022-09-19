@@ -19,10 +19,10 @@ public class TankFrame extends Frame {
 
     List<Tank> tanks = new ArrayList<>();//数组
     List<Bullet> bullets = new ArrayList<>();//数组
-    List<Explode> explodes=new ArrayList<>();
+    List<Explode> explodes = new ArrayList<>();
 
 
-    Explode e=new Explode(100, 100,this);//爆炸
+    Explode e = new Explode(100, 100, this);//爆炸
 
     static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;//抽象为常量 更改一个位置即可
 
@@ -70,6 +70,7 @@ public class TankFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("子弹的数量" + bullets.size(), 10, 60);
         g.drawString("坦克的数量" + tanks.size(), 10, 80);
+        g.drawString("爆炸的数量" + explodes.size(), 10, 100);
         g.setColor(c);//测试子弹的内存泄露 就是子弹飞出窗口但是不会消失 所以就是当前子弹最好要结束 也就是将其生命周期干掉
 
 
@@ -85,7 +86,7 @@ public class TankFrame extends Frame {
 //            b.paint(g);
 //        }
 
-
+        //绘制坦克
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
         }
@@ -97,7 +98,10 @@ public class TankFrame extends Frame {
             }
         }
 
-            e.paint(g);
+        //爆炸
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
+        }
 
     }
 
