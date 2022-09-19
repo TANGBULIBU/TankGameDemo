@@ -11,8 +11,12 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     private Dir dir = Dir.DOWN;//特有属性 默认朝向
     private static final int SPEED = 5;//不能呗改变
 
-    private boolean moving = false;
+    public static int WIDTH = ResourceMgr.tankD.getWidth();
+    public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
+
+    private boolean moving = false;
+    private boolean living = true;
     private TankFrame tf = null;
 
 
@@ -27,6 +31,9 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
 
     public void paint(Graphics g) {
 
+        if (!living) {
+            tf.tanks.remove(this);//如果没有存活 就不绘制 被消灭的话 就移除
+        }
         switch (dir) {
             case LEFT:
                 g.drawImage(ResourceMgr.tankL, x, y, null);
@@ -70,7 +77,9 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     }
 
     public void fire() {
-        tf.bullets.add(new Bullet(this.x, this.y, this.dir, this.tf));//从坦克的位置发射出来子弹
+        int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;//坦克发射子弹的位置
+        int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;//坦克发射子弹的位置
+        tf.bullets.add(new Bullet(bx, by, this.dir, this.tf));//从坦克的位置发射出来子弹
     }
 
 
@@ -82,11 +91,31 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
         this.moving = moving;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public Dir getDir() {
         return dir;
     }
 
     public void setDir(Dir dir) {
         this.dir = dir;
+    }
+
+    public void die() {
+        this.living=false;
     }
 }

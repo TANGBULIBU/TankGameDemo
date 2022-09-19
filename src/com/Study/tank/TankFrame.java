@@ -15,13 +15,13 @@ import java.util.List;
 public class TankFrame extends Frame {
 
 
-    Tank myTank = new Tank(200, 200, Dir.DOWN, this);//this 就是控制子弹的发射
-    EnemyTank eTank =new EnemyTank(200,50,Dir.DOWN,this);//敌人坦克生成
-    List<EnemyTank> enemyTanks = new ArrayList<>();//数组
-    int enemyTankSize= 3;//定义坦克数量
+    Tank myTank = new Tank(200, 400, Dir.DOWN, this);//this 就是控制子弹的发射
+
+    List<Tank> tanks = new ArrayList<>();//数组
+    int enemyTankSize = 3;//定义坦克数量
 
     List<Bullet> bullets = new ArrayList<>();//数组
-    Bullet b = new Bullet(300, 300, Dir.DOWN,this);
+    Bullet b = new Bullet(300, 300, Dir.DOWN, this);
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//抽象为常量 更改一个位置即可
 
 
@@ -64,10 +64,13 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c=g.getColor();
+        Color c = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("子弹的数量"+bullets.size(),10,60);
+        g.drawString("子弹的数量" + bullets.size(), 10, 60);
+        g.drawString("坦克的数量" + tanks.size(), 10, 80);
         g.setColor(c);//测试子弹的内存泄露 就是子弹飞出窗口但是不会消失 所以就是当前子弹最好要结束 也就是将其生命周期干掉
+
+
 
         myTank.paint(g);//坦克绘制
 
@@ -81,9 +84,16 @@ public class TankFrame extends Frame {
 //            b.paint(g);
 //        }
 
-        eTank.paint(g);
-        for (int i = 0; i < enemyTankSize; i++) {
 
+        for (int i = 0; i < tanks.size(); i++) {
+            tanks.get(i).paint(g);
+        }
+
+        for (int i = 0; i < bullets.size(); i++) {//子弹和坦克碰撞
+            for (int j = 0; j <tanks.size() ; j++) {
+                bullets.get(i).collideWith(tanks.get(j));
+
+            }
         }
 
     }

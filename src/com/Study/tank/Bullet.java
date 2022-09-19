@@ -8,41 +8,41 @@ import java.awt.*;
  */
 public class Bullet {
     private static final int SPEED = 10;
-    private static int WIDTH = 5, HEIGHT = 5;
-
+    public static int WIDTH = ResourceMgr.bulletD.getWidth();
+    public static int HEIGHT = ResourceMgr.bulletD.getHeight();
     private int x, y;
     private Dir dir;
 
-    private boolean live = true;
-    TankFrame tf=null;
+    private boolean living = true;
+    TankFrame tf = null;
 
 
-    public Bullet(int x, int y, Dir dir,TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.tf=tf;
+        this.tf = tf;
     }
 
     public void paint(Graphics g) {//绘制子弹
-        if(!live){
+        if (!living) {
             tf.bullets.remove(this);//如果没有存活 就移除
         }
 
         switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.bulletL, x, y+24, null);
+                g.drawImage(ResourceMgr.bulletL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.bulletR, x+50, y+24, null);
+                g.drawImage(ResourceMgr.bulletR, x, y, null);
                 break;
 
             case UP:
-                g.drawImage(ResourceMgr.bulletU, x+20, y, null);
+                g.drawImage(ResourceMgr.bulletU, x, y, null);
                 break;
 
             case DOWN:
-                g.drawImage(ResourceMgr.bulletD, x+20, y+50, null);
+                g.drawImage(ResourceMgr.bulletD, x, y, null);
                 break;
 
         }
@@ -69,7 +69,24 @@ public class Bullet {
                 break;
         }
 
+
         //超出边界就结束
-        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) live = false;
+        if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) living = false;
     }
+
+    public void collideWith(Tank tank) {
+        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// Rectangle 矩形 this子弹的位置数据
+        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH, Tank.HEIGHT);// tank的位置数据
+
+        if (rect1.intersects(rect2)){//对象1，2相交
+            tank.die();
+            this.die();
+        }
+
+    }
+
+    private void die() {
+        this.living=false;
+    }
+
 }
