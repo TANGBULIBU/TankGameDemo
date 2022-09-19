@@ -10,7 +10,7 @@ import java.util.Random;
 public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     private int x, y;
     private Dir dir = Dir.DOWN;//特有属性 默认朝向
-    private static final int SPEED = 5;//不能呗改变
+    private static final int SPEED = 4;//不能呗改变
 
     public static int WIDTH = ResourceMgr.tankD.getWidth();
     public static int HEIGHT = ResourceMgr.tankD.getHeight();

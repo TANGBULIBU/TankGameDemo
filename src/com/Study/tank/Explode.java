@@ -31,5 +31,8 @@ public class Explode {
             step = 0;
         }
 
+            tf.explodes.remove(this);
+
+
     }
 }
