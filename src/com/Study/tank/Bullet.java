@@ -15,14 +15,14 @@ public class Bullet {
 
     private boolean living = true;
     TankFrame tf = null;
-    private Group group=Group.BAD;
+    private Group group = Group.BAD;
 
 
-    public Bullet(int x, int y, Dir dir,Group group, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.group=group;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -86,23 +86,26 @@ public class Bullet {
 
     public void collideWith(Tank tank) {
 
-        if (this.group==tank.getGroup())return;//队友伤害默认不开启
+        if (this.group == tank.getGroup()) return;//队友伤害默认不开启
 
         //TODO 用一个rect记录子弹的位置
         Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// Rectangle 矩形 this子弹的位置数据
-        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),Tank.WIDTH, Tank.HEIGHT);// tank的位置数据
+        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);// tank的位置数据
 
 
-        if (rect1.intersects(rect2)){//对象1，2相交
+        if (rect1.intersects(rect2)) {//对象1，2相交
             tank.die();
             this.die();
-            tf.explodes.add(new Explode(x,y,tf));
+
+            int eX = tank.getX()+tank.WIDTH / 2 - Explode.WIDTH / 2;
+            int eY = tank.getY()+tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+            tf.explodes.add(new Explode(eX, eY, tf));
         }
 
     }
 
     private void die() {
-        this.living=false;
+        this.living = false;
     }
 
 }

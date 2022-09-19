@@ -20,16 +20,16 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     private boolean living = true;
     private TankFrame tf = null;
 
-    private Random random=new Random();//生成随机数
-    private Group group=Group.BAD;
+    private Random random = new Random();//生成随机数
+    private Group group = Group.BAD;
 
 
-    public Tank(int x, int y, Dir dir,Group group, TankFrame tf) {//将子弹引入
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {//将子弹引入
         super();
         this.x = x;
         this.y = y;
         this.dir = dir;
-        this.group=group;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -80,15 +80,25 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
                 break;
         }
 
-        if (random.nextInt(10)>8)this.fire();//
+        if (this.group == Group.BAD && random.nextInt(100) > 95)
+            this.fire();//只有敌人才是随机发射
 
+
+        if (this.group == Group.BAD && random.nextInt(100) > 95)
+            randomDir();
+
+    }
+
+    private void randomDir() {//随机方向
+
+        this.dir = Dir.values()[random.nextInt(4)];//values() 返回到一个数组 数组内是能取的值
     }
 
     public void fire() {
         int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;//坦克发射子弹的位置
         int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;//坦克发射子弹的位置
 
-        tf.bullets.add(new Bullet(bx, by, this.dir,this.group, this.tf));//从坦克的位置发射出来子弹
+        tf.bullets.add(new Bullet(bx, by, this.dir, this.group, this.tf));//从坦克的位置发射出来子弹
     }
 
     public Group getGroup() {
@@ -132,6 +142,6 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     }
 
     public void die() {
-        this.living=false;
+        this.living = false;
     }
 }
