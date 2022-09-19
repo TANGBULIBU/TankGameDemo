@@ -87,6 +87,7 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     public void fire() {
         int bx = this.x + Tank.WIDTH / 2 - Bullet.WIDTH / 2;//坦克发射子弹的位置
         int by = this.y + Tank.HEIGHT / 2 - Bullet.HEIGHT / 2;//坦克发射子弹的位置
+
         tf.bullets.add(new Bullet(bx, by, this.dir,this.group, this.tf));//从坦克的位置发射出来子弹
     }
 

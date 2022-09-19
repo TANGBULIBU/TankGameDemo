@@ -20,7 +20,8 @@ public class TankFrame extends Frame {
     List<Tank> tanks = new ArrayList<>();//数组
     List<Bullet> bullets = new ArrayList<>();//数组
 
-    int enemyTankSize = 3;//定义坦克数量
+
+    Explode e=new Explode(100,100,this);//爆炸
 
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//抽象为常量 更改一个位置即可
 
@@ -95,6 +96,7 @@ public class TankFrame extends Frame {
             }
         }
 
+        e.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
