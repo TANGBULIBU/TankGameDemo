@@ -17,6 +17,8 @@ public class Bullet {
     TankFrame tf = null;
     private Group group = Group.BAD;
 
+    Rectangle rect = new Rectangle();//记录子弹数据
+
 
     public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -24,6 +26,12 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+//记录子弹数据
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
+
     }
 
     public Group getGroup() {
@@ -79,26 +87,30 @@ public class Bullet {
                 break;
         }
 
-
         //超出边界就结束
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) living = false;
+
+
+        //update rect
+        rect.x = this.x;
+        rect.y = this.y;
     }
 
     public void collideWith(Tank tank) {
 
         if (this.group == tank.getGroup()) return;//队友伤害默认不开启
 
-        //TODO 用一个rect记录子弹的位置
-        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// Rectangle 矩形 this子弹的位置数据
-        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);// tank的位置数据
+//        //TODO 用一个rect记录子弹的位置
+//        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);// Rectangle 矩形 this子弹的位置数据
+//        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);// tank的位置数据
 
 
-        if (rect1.intersects(rect2)) {//对象1，2相交
+        if (rect.intersects(rect)) {//对象1，2相交
             tank.die();
             this.die();
 
-            int eX = tank.getX()+tank.WIDTH / 2 - Explode.WIDTH / 2;
-            int eY = tank.getY()+tank.HEIGHT / 2 - Explode.HEIGHT / 2;
+            int eX = tank.getX() + tank.WIDTH / 2 - Explode.WIDTH / 2;
+            int eY = tank.getY() + tank.HEIGHT / 2 - Explode.HEIGHT / 2;
             tf.explodes.add(new Explode(eX, eY, tf));
         }
 

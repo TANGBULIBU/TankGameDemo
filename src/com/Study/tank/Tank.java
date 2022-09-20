@@ -24,6 +24,12 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     private Group group = Group.BAD;
 
 
+    /**
+     * rectangle 每次移动需要碰撞检测 也就是有n*m此检测 2mn的新对象 消除这个数据
+     */
+    Rectangle rect = new Rectangle();//记录坦克数据
+
+
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {//将子弹引入
         super();
         this.x = x;
@@ -31,6 +37,12 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+
+        //记录坦克数据
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
 
@@ -82,6 +94,7 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
                 break;
         }
 
+
         if (this.group == Group.BAD && random.nextInt(100) > 95)
             this.fire();//只有敌人才是随机发射
 
@@ -92,13 +105,18 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
 
         //边界检测
         boundCheck();
+
+
+        //update rect
+        rect.x = this.x;
+        rect.y = this.y;
     }
 
     private void boundCheck() {
         if (this.x < 5) x = 5;
         if (this.y < 100) y = 100;
-        if (this.x > TankFrame.GAME_WIDTH-Tank.WIDTH-5) x = TankFrame.GAME_WIDTH- Tank.WIDTH-5;
-        if (this.y > TankFrame.GAME_HEIGHT-Tank.HEIGHT-5) y = TankFrame.GAME_HEIGHT-Tank.HEIGHT-5;
+        if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 5) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 5;
+        if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 5) y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 5;
 
 
     }
