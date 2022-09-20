@@ -26,7 +26,8 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
-//记录子弹数据
+
+        //记录子弹数据
         rect.x = this.x;
         rect.y = this.y;
         rect.width = WIDTH;
@@ -105,7 +106,7 @@ public class Bullet {
 //        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);// tank的位置数据
 
 
-        if (rect.intersects(rect)) {//对象1，2相交
+        if (rect.intersects(tank.rect)) {//对象1，2相交
             tank.die();
             this.die();
 
