@@ -12,8 +12,8 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
     private Dir dir = Dir.DOWN;//特有属性 默认朝向
     private static final int SPEED = 4;//不能呗改变
 
-    public static int WIDTH = ResourceMgr.tankD.getWidth();
-    public static int HEIGHT = ResourceMgr.tankD.getHeight();
+    public static int WIDTH = ResourceMgr.goodTankU.getWidth();
+    public static int HEIGHT = ResourceMgr.goodTankU.getHeight();
 
 
     private boolean moving = true;
@@ -39,20 +39,23 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
         if (!living) {
             tf.tanks.remove(this);//如果没有存活 就不绘制 被消灭的话 就移除
         }
+
+        //判定是好的坦克还是坏的坦克
+
         switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.tankL, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
 
             case UP:
-                g.drawImage(ResourceMgr.tankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
 
             case DOWN:
-                g.drawImage(ResourceMgr.tankD, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
 
         }
@@ -63,7 +66,6 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
 
     private void move() {
         if (!moving) return;
-
 
         switch (dir) {
             case LEFT:
@@ -86,6 +88,18 @@ public class Tank {//将坦克固有类封装给坦克 并且实现构造方法 以调用方向速度等
 
         if (this.group == Group.BAD && random.nextInt(100) > 95)
             randomDir();
+
+
+        //边界检测
+        boundCheck();
+    }
+
+    private void boundCheck() {
+        if (this.x < 5) x = 5;
+        if (this.y < 100) y = 100;
+        if (this.x > TankFrame.GAME_WIDTH-Tank.WIDTH-5) x = TankFrame.GAME_WIDTH- Tank.WIDTH-5;
+        if (this.y > TankFrame.GAME_HEIGHT-Tank.HEIGHT-5) y = TankFrame.GAME_HEIGHT-Tank.HEIGHT-5;
+
 
     }
 

@@ -22,7 +22,6 @@ public class TankFrame extends Frame {
     List<Explode> explodes = new ArrayList<>();
 
 
-    Explode e = new Explode(100, 100, this);//爆炸
 
     static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;//抽象为常量 更改一个位置即可
 

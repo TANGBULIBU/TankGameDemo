@@ -16,6 +16,8 @@ public class Main {
         while (true){
             Thread.sleep(45);//Ïß³ÌÐÝÃß
             tf.repaint();
+
+            System.out.println();
         }
     }
 }
